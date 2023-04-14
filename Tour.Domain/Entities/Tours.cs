@@ -19,5 +19,6 @@ namespace Tour.Domain.Entities
         public string? SightId { get; set; }
         public Sight? Sight { get; set; }
         public ICollection<OrderDetail>? OrderDetails { get; set; }
+        public ICollection<CartOrder>? CartOrders { get; set; }
     }
 }

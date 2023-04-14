@@ -8,9 +8,11 @@ namespace Tour.Domain.Entities
         public string Id { get; set; }
         public double Total { get; set; }
         public DateTime DateOrder { get; set; }
-
-        public string? UserId { get; set; }
-        public User? User { get; set; }
+       
+        public string? UsersId { get; set; }
+        public Users? Users { get; set; }
+        public string? ShippingId { get; set; }
+        public Shipping? Shipping { get; set; }
         public ICollection<OrderDetail>? OrderDetails { get; set; }
     }
 }

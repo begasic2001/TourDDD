@@ -11,9 +11,7 @@ using System.Text;
 using Tour.Application.Common.Interfaces.Authentication;
 using Tour.Application.Common.Services;
 using Tour.Application.Interfaces;
-using Tour.Application.Services.Authentication;
 using Tour.Domain.Entities;
-using Tour.Infrastructure.Authentication;
 using Tour.Infrastructure.Common;
 using Tour.Infrastructure.Data;
 using Tour.Infrastructure.Repositories;
@@ -29,10 +27,7 @@ namespace Tour.Infrastructure
             hostBuilder.UseServiceProviderFactory(new AutofacServiceProviderFactory());
             hostBuilder.ConfigureContainer<ContainerBuilder>(autofacConfigure =>
             {
-                autofacConfigure.
-                    RegisterType<AuthenticationApp>().As<IAuthentication>();
-                autofacConfigure.
-                    RegisterType<JwtTokenGenerator>().As<IJwtTokenGenerator>();
+             
                 autofacConfigure.
                     RegisterType<DateTimeProvider>().As<IDateTimeProvider>();
 
@@ -47,7 +42,7 @@ namespace Tour.Infrastructure
                 autofacConfigure
                    .RegisterType<Repository<Tours>>().As<IRepository<Tours>>();
                 autofacConfigure
-                   .RegisterType<Repository<User>>().As<IRepository<User>>();
+                   .RegisterType<Repository<Users>>().As<IRepository<Users>>();
                 // autofacConfigure
                 //    .RegisterType<Repository<Order>>().As<IRepository<Order>>();
                 // autofacConfigure
@@ -73,8 +68,8 @@ namespace Tour.Infrastructure
 
         public static IServiceCollection AddServiceCollection(this IServiceCollection services, Microsoft.Extensions.Configuration.ConfigurationManager configuration)
         {
-            services.AddIdentity<User, IdentityRole>()
-            .AddEntityFrameworkStores<TourDatabaseContext>().AddDefaultTokenProviders();
+            //services.AddIdentity<User, IdentityRole>()
+            //.AddEntityFrameworkStores<TourDatabaseContext>().AddDefaultTokenProviders();
 
             services.AddDbContext<TourDatabaseContext>(option =>
             {
@@ -91,6 +86,8 @@ namespace Tour.Infrastructure
                 options.RequireHttpsMetadata = false;
                 options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
                 {
+                    ValidateIssuerSigningKey = true,
+                    ValidateLifetime = true,
                     ValidateIssuer = true,
                     ValidateAudience = true,
                     ValidAudience = configuration["JWT:ValidAudience"],
