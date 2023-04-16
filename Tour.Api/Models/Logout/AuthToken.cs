@@ -1,4 +1,4 @@
-﻿namespace Tour.Api.Models
+﻿namespace Tour.Api.Models.Logout
 {
     public class AuthToken
     {

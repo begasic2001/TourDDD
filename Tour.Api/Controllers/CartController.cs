@@ -24,25 +24,22 @@ namespace Tour.Api.Controllers
             this.context = context;   
         }
         [HttpPost("AddToCart")]
-        public async Task<IActionResult> AddToCart()
+        public async Task<IActionResult> AddToCart(AddToCartModel model)
         {
             try
             {
-                //AddToCartModel model
-                //Console.WriteLine(model.TourId);
-                //Console.WriteLine(model.UserId);
-                //Console.WriteLine(model.Amount);
-                //string StoredProc = "exec sp_AddToCart " +
-                //        "@CUS = " + model.UserId + "," +
-                //        "@ITEM = '" + model.TourId + "'," +
-                //        "@Amount= '" + model.Amount + "'";
-                //var result = await context.CartOrders.FromSqlRaw(StoredProc).ToListAsync();
-                var result = HttpContext.Request.Headers["Authorization"].ToString().Split()[1];
+                var token = HttpContext.Request.Headers["Authorization"].ToString().Split()[1];
                 var handler = new JwtSecurityTokenHandler();
-                var jsonToken = handler.ReadToken(result);
+                var jsonToken = handler.ReadToken(token);
                 var tokenS = jsonToken as JwtSecurityToken;
-                var id = tokenS.Claims.First(claim => claim.Type == "nameid").Value;
-                return Ok(id);
+                var UserId = tokenS.Claims.First(claim => claim.Type == "nameid").Value;
+                await Console.Out.WriteLineAsync(UserId);
+                string StoredProc = "exec sp_AddToCart " +
+                        "@CUS = '" + UserId + "'," +
+                        "@ITEM = '" + model.TourId + "'," +
+                        "@Amount= '" + model.Amount + "'";
+                var result = await context.CartOrders.FromSqlRaw(StoredProc).ToListAsync();
+                return Ok(result);
             }
             catch (Exception ex)
             {
