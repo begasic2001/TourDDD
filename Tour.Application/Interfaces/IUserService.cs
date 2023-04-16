@@ -5,10 +5,7 @@ namespace Tour.Application.Interfaces
 {
     public interface IUserService
     {
-        //Task<IdentityResult> SignUpAsync(SignUpDto model);
-        //Task<string> SignInAsync(SignInDto model);
-        Task<List<UserModel>> GetAllUser();
-        //Task<List<AuthResult>> SignInAsync(SignInDto model);
+        Task<string> GetUri(Uri u);
         Task<string> PostUri(Uri u, HttpContent c);
     }
 }

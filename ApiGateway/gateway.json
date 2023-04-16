@@ -12,19 +12,8 @@
       ],
       "UpstreamPathTemplate": "/api/User/GetAllUsers",
       "UpstreamHttpMethod": [ "Get" ]
-    },
-    {
-      "DownstreamPathTemplate": "/api/User/GetAllUsers",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 9001
-        }
-      ],
-      "UpstreamPathTemplate": "/api/User/GetAllUsers",
-      "UpstreamHttpMethod": [ "Get" ]
     }
+   
   ]
  
 }

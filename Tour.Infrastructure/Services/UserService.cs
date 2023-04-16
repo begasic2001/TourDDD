@@ -24,24 +24,19 @@ namespace Tour.Infrastructure.Services
         {
            
         }
-        public async Task<List<UserModel>> GetAllUser()
+        public async Task<string> GetUri(Uri u)
         {
+            var response = string.Empty;
             using (var client = new HttpClient())
             {
-                List<UserModel> UserList = new List<UserModel>();
-                var url = "https://localhost:9001/api/User/GetAllUsers";
-                client.BaseAddress = new Uri(url);
-                HttpResponseMessage response = await client.GetAsync(url);
-                if (response.IsSuccessStatusCode)
+              
+                HttpResponseMessage result = await client.GetAsync(u);
+                if (result.IsSuccessStatusCode)
                 {
-                    var strResult = response.Content.ReadAsStringAsync().Result;
-                    UserList = JsonConvert.DeserializeObject<List<UserModel>>(strResult);
-                    return UserList;
+                    
+                    response = result.Content.ReadAsStringAsync().Result;
                 }
-                else
-                {
-                    return null;
-                }
+                return response;
             }
         }
         public async Task<string> PostUri(Uri u, HttpContent c)
