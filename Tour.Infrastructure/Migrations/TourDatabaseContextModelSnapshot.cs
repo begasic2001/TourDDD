@@ -3,20 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Tour.Infrastructure.Data;
 
 #nullable disable
 
-namespace Tour.Api.Migrations
+namespace Tour.Infrastructure.Migrations
 {
     [DbContext(typeof(TourDatabaseContext))]
-    [Migration("20230411084218_Re-Update Table User")]
-    partial class ReUpdateTableUser
+    partial class TourDatabaseContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -85,6 +82,44 @@ namespace Tour.Api.Migrations
                     b.HasIndex("CountryId");
 
                     b.ToTable("City");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "1",
+                            CityName = "tphcm",
+                            CountryId = "1"
+                        },
+                        new
+                        {
+                            Id = "2",
+                            CityName = "vũng tàu",
+                            CountryId = "1"
+                        },
+                        new
+                        {
+                            Id = "3",
+                            CityName = "tokyo",
+                            CountryId = "3"
+                        },
+                        new
+                        {
+                            Id = "4",
+                            CityName = "bangkok",
+                            CountryId = "4"
+                        },
+                        new
+                        {
+                            Id = "5",
+                            CityName = "seoul",
+                            CountryId = "2"
+                        },
+                        new
+                        {
+                            Id = "6",
+                            CityName = "busan",
+                            CountryId = "2"
+                        });
                 });
 
             modelBuilder.Entity("Tour.Domain.Entities.Country", b =>
@@ -99,6 +134,33 @@ namespace Tour.Api.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Country");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "1",
+                            CountryName = "việt nam"
+                        },
+                        new
+                        {
+                            Id = "2",
+                            CountryName = "hàn quốc"
+                        },
+                        new
+                        {
+                            Id = "3",
+                            CountryName = "nhật bản"
+                        },
+                        new
+                        {
+                            Id = "4",
+                            CountryName = "thái lan"
+                        },
+                        new
+                        {
+                            Id = "5",
+                            CountryName = "singapor"
+                        });
                 });
 
             modelBuilder.Entity("Tour.Domain.Entities.Order", b =>
@@ -160,6 +222,9 @@ namespace Tour.Api.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<DateTime>("createdAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("ship_address")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -208,6 +273,15 @@ namespace Tour.Api.Migrations
                     b.HasIndex("CityId");
 
                     b.ToTable("Sight");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "1",
+                            CityId = "1",
+                            SightForMoney = 140000.0,
+                            SightName = "Đầm Sen"
+                        });
                 });
 
             modelBuilder.Entity("Tour.Domain.Entities.Tours", b =>
@@ -249,6 +323,20 @@ namespace Tour.Api.Migrations
                     b.HasIndex("TransportId");
 
                     b.ToTable("Tour");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "1",
+                            CityId = "1",
+                            EndDate = new DateTime(2023, 4, 17, 15, 29, 45, 669, DateTimeKind.Utc).AddTicks(6593),
+                            MaxTourists = 50,
+                            Name = "Du Lịch TPHCM",
+                            Price = 1000000.0,
+                            SightId = "1",
+                            StartDate = new DateTime(2023, 4, 17, 15, 29, 45, 669, DateTimeKind.Utc).AddTicks(6588),
+                            TransportId = "1"
+                        });
                 });
 
             modelBuilder.Entity("Tour.Domain.Entities.Transport", b =>
@@ -263,6 +351,13 @@ namespace Tour.Api.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Transport");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "1",
+                            TransportName = "Xe Khách"
+                        });
                 });
 
             modelBuilder.Entity("Tour.Domain.Entities.Users", b =>
@@ -274,10 +369,6 @@ namespace Tour.Api.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

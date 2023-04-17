@@ -3,17 +3,20 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Tour.Infrastructure.Data;
 
 #nullable disable
 
-namespace Tour.Api.Migrations
+namespace Tour.Infrastructure.Migrations
 {
     [DbContext(typeof(TourDatabaseContext))]
-    partial class TourDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20230417090203_test")]
+    partial class test
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -326,12 +329,12 @@ namespace Tour.Api.Migrations
                         {
                             Id = "1",
                             CityId = "1",
-                            EndDate = new DateTime(2023, 4, 16, 15, 58, 20, 373, DateTimeKind.Utc).AddTicks(3574),
+                            EndDate = new DateTime(2023, 4, 17, 9, 2, 2, 916, DateTimeKind.Utc).AddTicks(4644),
                             MaxTourists = 50,
                             Name = "Du Lịch TPHCM",
                             Price = 1000000.0,
                             SightId = "1",
-                            StartDate = new DateTime(2023, 4, 16, 15, 58, 20, 373, DateTimeKind.Utc).AddTicks(3571),
+                            StartDate = new DateTime(2023, 4, 17, 9, 2, 2, 916, DateTimeKind.Utc).AddTicks(4640),
                             TransportId = "1"
                         });
                 });
@@ -366,10 +369,6 @@ namespace Tour.Api.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Tour.Api.Migrations
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
+namespace Tour.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class ReUpdateTableUser : Migration
+    public partial class test : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -56,7 +58,6 @@ namespace Tour.Api.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Avatar = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -235,6 +236,46 @@ namespace Tour.Api.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.InsertData(
+                table: "Country",
+                columns: new[] { "Id", "CountryName" },
+                values: new object[,]
+                {
+                    { "1", "việt nam" },
+                    { "2", "hàn quốc" },
+                    { "3", "nhật bản" },
+                    { "4", "thái lan" },
+                    { "5", "singapor" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Transport",
+                columns: new[] { "Id", "TransportName" },
+                values: new object[] { "1", "Xe Khách" });
+
+            migrationBuilder.InsertData(
+                table: "City",
+                columns: new[] { "Id", "CityName", "CountryId" },
+                values: new object[,]
+                {
+                    { "1", "tphcm", "1" },
+                    { "2", "vũng tàu", "1" },
+                    { "3", "tokyo", "3" },
+                    { "4", "bangkok", "4" },
+                    { "5", "seoul", "2" },
+                    { "6", "busan", "2" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Sight",
+                columns: new[] { "Id", "CityId", "Picture", "SightForMoney", "SightName" },
+                values: new object[] { "1", "1", null, 140000.0, "Đầm Sen" });
+
+            migrationBuilder.InsertData(
+                table: "Tour",
+                columns: new[] { "Id", "CityId", "EndDate", "MaxTourists", "Name", "Price", "SightId", "StartDate", "TransportId" },
+                values: new object[] { "1", "1", new DateTime(2023, 4, 17, 9, 2, 2, 916, DateTimeKind.Utc).AddTicks(4644), 50, "Du Lịch TPHCM", 1000000.0, "1", new DateTime(2023, 4, 17, 9, 2, 2, 916, DateTimeKind.Utc).AddTicks(4640), "1" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_CartOrders_TourId",

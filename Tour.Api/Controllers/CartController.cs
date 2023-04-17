@@ -29,16 +29,14 @@ namespace Tour.Api.Controllers
             try
             {
                 var token = HttpContext.Request.Headers["Authorization"].ToString().Split()[1];
+                
                 var handler = new JwtSecurityTokenHandler();
                 var jsonToken = handler.ReadToken(token);
                 var tokenS = jsonToken as JwtSecurityToken;
-                var UserId = tokenS.Claims.First(claim => claim.Type == "nameid").Value;
-                await Console.Out.WriteLineAsync(UserId);
-                string StoredProc = "exec sp_AddToCart " +
-                        "@CUS = '" + UserId + "'," +
-                        "@ITEM = '" + model.TourId + "'," +
-                        "@Amount= '" + model.Amount + "'";
-                var result = await context.CartOrders.FromSqlRaw(StoredProc).ToListAsync();
+                var UsersId = tokenS.Claims.First(claim => claim.Type == "nameid").Value;
+                
+                //string StoredProc = $"exec sp_AddToCart @CUS = {UsersId}, @ITEM = {model.TourId}, @Amount = {model.Amount}";
+                var result =  await context?.CartOrders?.FromSqlInterpolated($"exec sp_AddToCart @CUS = {UsersId}, @ITEM = {model.TourId}, @Amount = {model.Amount}").ToListAsync();
                 return Ok(result);
             }
             catch (Exception ex)
@@ -47,6 +45,30 @@ namespace Tour.Api.Controllers
                 return BadRequest(ex.Message);
             }
           
+        }
+
+        [HttpGet("GetCart")]
+        public async Task<IActionResult> GetCart()
+        {
+            try
+            {
+
+                var token = HttpContext.Request.Headers["Authorization"].ToString().Split()[1];
+
+                var handler = new JwtSecurityTokenHandler();
+                var jsonToken = handler.ReadToken(token);
+                var tokenS = jsonToken as JwtSecurityToken;
+                var UsersId = tokenS.Claims.First(claim => claim.Type == "nameid").Value;
+                //Console.WriteLine("UsersId::::::::::::"+UsersId);
+                 
+                var result = await context?.CartOrders?.FromSqlInterpolated($"sp_getCart {UsersId} ").ToListAsync();    
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
         }
     }
 }
