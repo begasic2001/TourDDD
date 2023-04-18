@@ -6,8 +6,8 @@ namespace Tour.Domain.Entities
     {
         [Key]
         public string id { get; set; }
-        public int quantity { get; set; }
-        public double SinglePrice { get; set; }
+        public int? quantity { get; set; }
+        public double? SinglePrice { get; set; }
         public string OrderId { get; set; }
         public Order Order { get; set; }
         public string TourId { get; set; }

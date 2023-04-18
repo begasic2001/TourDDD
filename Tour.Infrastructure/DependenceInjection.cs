@@ -73,7 +73,7 @@ namespace Tour.Infrastructure
 
             services.AddDbContext<TourDatabaseContext>(option =>
             {
-                option.UseSqlServer(configuration.GetConnectionString("DefaultString"), b => b.MigrationsAssembly("Tour.Api"));
+                option.UseSqlServer(configuration.GetConnectionString("DefaultString"), b => b.MigrationsAssembly("Tour.Infrastructure"));
             });
             services.AddAuthentication(options =>
             {

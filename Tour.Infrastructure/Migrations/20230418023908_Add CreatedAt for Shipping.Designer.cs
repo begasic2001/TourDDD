@@ -9,11 +9,11 @@ using Tour.Infrastructure.Data;
 
 #nullable disable
 
-namespace Tour.Api.Migrations
+namespace Tour.Infrastructure.Migrations
 {
     [DbContext(typeof(TourDatabaseContext))]
-    [Migration("20230416155820_Add Seed data")]
-    partial class AddSeeddata
+    [Migration("20230418023908_Add CreatedAt for Shipping")]
+    partial class AddCreatedAtforShipping
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -225,6 +225,9 @@ namespace Tour.Api.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<DateTime>("createdAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("ship_address")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -329,12 +332,12 @@ namespace Tour.Api.Migrations
                         {
                             Id = "1",
                             CityId = "1",
-                            EndDate = new DateTime(2023, 4, 16, 15, 58, 20, 373, DateTimeKind.Utc).AddTicks(3574),
+                            EndDate = new DateTime(2023, 4, 18, 2, 39, 8, 62, DateTimeKind.Utc).AddTicks(1382),
                             MaxTourists = 50,
                             Name = "Du Lịch TPHCM",
                             Price = 1000000.0,
                             SightId = "1",
-                            StartDate = new DateTime(2023, 4, 16, 15, 58, 20, 373, DateTimeKind.Utc).AddTicks(3571),
+                            StartDate = new DateTime(2023, 4, 18, 2, 39, 8, 62, DateTimeKind.Utc).AddTicks(1375),
                             TransportId = "1"
                         });
                 });
@@ -369,10 +372,6 @@ namespace Tour.Api.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

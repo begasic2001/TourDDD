@@ -10,11 +10,11 @@ namespace Tour.Domain.Entities
 {
     public class CartOrder
     {
+
+        public string UsersId { get; set; }
+        public Users Users { get; set; }
         
-        public string? UsersId { get; set; }
-        public Users? Users { get; set; }
-        
-        public string? TourId { get; set; }
+        public string TourId { get; set; }
         public Tours Tour { get; set; }
         public int Amount { get; set; }
         public double SingleProduct { get; set; }
