@@ -16,6 +16,7 @@ namespace Tour.Domain.Entities
         public string ship_phone { get; set;}
         public string ship_email { get; set;}
         public string ship_city { get; set;}
+        public DateTime createdAt { get; set; } = DateTime.Now;
         public ICollection<Order> Orders { get; set; }
     }
     
