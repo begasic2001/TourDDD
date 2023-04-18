@@ -37,35 +37,35 @@ namespace Tour.Api.Controllers
                 var UsersId = tokenS.Claims.First(claim => claim.Type == "nameid").Value;
                 Console.WriteLine("TourId:::::"+model.TourId);
                 var hasCart = context.CartOrders.SingleOrDefault(c => c.UsersId == UsersId && c.TourId == model.TourId);
-                if(hasCart == null)
-                {
-                    double price = context.Tour.Where(t => t.Id == model.TourId).Select(t => t.Price).Cast<double>();
-                    Console.WriteLine("Price::::"+price);
-                    var cart = new CartOrder()
-                    {
-                        UsersId = UsersId,
-                        TourId = model.TourId,
-                        Amount = 1,
-                        SingleProduct = Convert.ToDouble(price),
-                    };
-                    await context.CartOrders.AddAsync(cart);
-                }
-                else
-                {
-                    hasCart.Amount++;
-                }
+                //if(hasCart == null)
+                //{
+                //    double price = context.Tour.Where(t => t.Id == model.TourId).Select(t => t.Price).Cast<double>();
+                //    Console.WriteLine("Price::::"+price);
+                //    var cart = new CartOrder()
+                //    {
+                //        UsersId = UsersId,
+                //        TourId = model.TourId,
+                //        Amount = 1,
+                //        SingleProduct = Convert.ToDouble(price),
+                //    };
+                //    await context.CartOrders.AddAsync(cart);
+                //}
+                //else
+                //{
+                //    hasCart.Amount++;
+                //}
 
-                context.SaveChanges();
-                return Ok(hasCart);
+                //context.SaveChanges();
+                //return Ok(hasCart);
                 // or call store procedure
-                //string StoredProc = $"exec sp_AddToCart @CUS ='{UsersId}', @ITEM ='{model.TourId}', @Amount ='{model.Amount}'";
-                // await context.CartOrders.FromSqlRaw(StoredProc).ToListAsync();
-                //return StatusCode(StatusCodes.Status200OK,
-                //       new
-                //       {
-                //           Status = "Success",
-                //           Message = $"Add  for {UsersId} succesffully"
-                //       });
+                string StoredProc = $"exec sp_AddToCart @CUS ='{UsersId}', @ITEM ='{model.TourId}', @Amount ='1'";
+                await context.CartOrders.FromSqlRaw(StoredProc).ToListAsync();
+                return StatusCode(StatusCodes.Status200OK,
+                       new
+                       {
+                           Status = "Success",
+                           Message = $"Add  for {UsersId} succesffully"
+                       });
                 //var result = await context.CartOrders.Ad
             }
             catch (Exception ex)
