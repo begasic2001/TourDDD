@@ -12,8 +12,13 @@ using Tour.Infrastructure.Data;
 namespace Tour.Infrastructure.Migrations
 {
     [DbContext(typeof(TourDatabaseContext))]
+<<<<<<<< HEAD:Tour.Infrastructure/Migrations/20230418140440_TourDatabase.Designer.cs
     [Migration("20230418140440_TourDatabase")]
     partial class TourDatabase
+========
+    [Migration("20230417090203_test")]
+    partial class test
+>>>>>>>> 63f5a37fd5dd846feeec5ef3672bbf1f33404ead:Tour.Infrastructure/Migrations/20230417090203_test.Designer.cs
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -332,12 +337,20 @@ namespace Tour.Infrastructure.Migrations
                         {
                             Id = "1",
                             CityId = "1",
+<<<<<<<< HEAD:Tour.Infrastructure/Migrations/20230418140440_TourDatabase.Designer.cs
                             EndDate = new DateTime(2023, 4, 18, 14, 4, 39, 964, DateTimeKind.Utc).AddTicks(8898),
+========
+                            EndDate = new DateTime(2023, 4, 17, 9, 2, 2, 916, DateTimeKind.Utc).AddTicks(4644),
+>>>>>>>> 63f5a37fd5dd846feeec5ef3672bbf1f33404ead:Tour.Infrastructure/Migrations/20230417090203_test.Designer.cs
                             MaxTourists = 50,
                             Name = "Du Lịch TPHCM",
                             Price = 1000000.0,
                             SightId = "1",
+<<<<<<<< HEAD:Tour.Infrastructure/Migrations/20230418140440_TourDatabase.Designer.cs
                             StartDate = new DateTime(2023, 4, 18, 14, 4, 39, 964, DateTimeKind.Utc).AddTicks(8892),
+========
+                            StartDate = new DateTime(2023, 4, 17, 9, 2, 2, 916, DateTimeKind.Utc).AddTicks(4640),
+>>>>>>>> 63f5a37fd5dd846feeec5ef3672bbf1f33404ead:Tour.Infrastructure/Migrations/20230417090203_test.Designer.cs
                             TransportId = "1"
                         });
                 });

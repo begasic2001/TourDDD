@@ -8,7 +8,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Tour.Infrastructure.Migrations
 {
     /// <inheritdoc />
+<<<<<<<< HEAD:Tour.Infrastructure/Migrations/20230418140440_TourDatabase.cs
     public partial class TourDatabase : Migration
+========
+    public partial class test : Migration
+>>>>>>>> 63f5a37fd5dd846feeec5ef3672bbf1f33404ead:Tour.Infrastructure/Migrations/20230417090203_test.cs
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -276,7 +280,11 @@ namespace Tour.Infrastructure.Migrations
             migrationBuilder.InsertData(
                 table: "Tour",
                 columns: new[] { "Id", "CityId", "EndDate", "MaxTourists", "Name", "Price", "SightId", "StartDate", "TransportId" },
+<<<<<<<< HEAD:Tour.Infrastructure/Migrations/20230418140440_TourDatabase.cs
                 values: new object[] { "1", "1", new DateTime(2023, 4, 18, 14, 4, 39, 964, DateTimeKind.Utc).AddTicks(8898), 50, "Du Lịch TPHCM", 1000000.0, "1", new DateTime(2023, 4, 18, 14, 4, 39, 964, DateTimeKind.Utc).AddTicks(8892), "1" });
+========
+                values: new object[] { "1", "1", new DateTime(2023, 4, 17, 9, 2, 2, 916, DateTimeKind.Utc).AddTicks(4644), 50, "Du Lịch TPHCM", 1000000.0, "1", new DateTime(2023, 4, 17, 9, 2, 2, 916, DateTimeKind.Utc).AddTicks(4640), "1" });
+>>>>>>>> 63f5a37fd5dd846feeec5ef3672bbf1f33404ead:Tour.Infrastructure/Migrations/20230417090203_test.cs
 
             migrationBuilder.CreateIndex(
                 name: "IX_CartOrders_TourId",

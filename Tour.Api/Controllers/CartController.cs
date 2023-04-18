@@ -131,13 +131,17 @@ namespace Tour.Api.Controllers
             {
 
                 var token = HttpContext.Request.Headers["Authorization"].ToString().Split()[1];
-
+                
                 var handler = new JwtSecurityTokenHandler();
                 var jsonToken = handler.ReadToken(token);
                 var tokenS = jsonToken as JwtSecurityToken;
-                var UsersId = tokenS.Claims.First(claim => claim.Type == "nameid").Value;
-
-                var result = await context.CartOrders.FromSqlRaw($"exec sp_destroyCart @CUS = '{UsersId}'").ToListAsync();
+                var UserId = tokenS.Claims.First(claim => claim.Type == "nameid").Value;
+                await Console.Out.WriteLineAsync(UserId);
+                string StoredProc = "exec sp_AddToCart " +
+                        "@CUS = '" + UserId + "'," +
+                        "@ITEM = '" + model.TourId + "'," +
+                        "@Amount= '" + model.Amount + "'";
+                var result = await context.CartOrders.FromSqlRaw(StoredProc).ToListAsync();
                 return Ok(result);
 
             }
@@ -170,29 +174,7 @@ namespace Tour.Api.Controllers
 
                 return BadRequest(ex.Message);
             }
-        }
-
-        [HttpPost("Purchase")]
-        public async Task<IActionResult> Purchase()
-        {
-            try
-            {
-                var token = HttpContext.Request.Headers["Authorization"].ToString().Split()[1];
-
-                var handler = new JwtSecurityTokenHandler();
-                var jsonToken = handler.ReadToken(token);
-                var tokenS = jsonToken as JwtSecurityToken;
-                var UsersId = tokenS.Claims.First(claim => claim.Type == "nameid").Value;
-
-                var result = await context.Carts.FromSqlRaw($"exec sp_PURCHASE_CART @CUS ='{UsersId}'").ToListAsync();
-                return Ok(result);
-
-            }
-            catch (Exception ex)
-            {
-
-                return BadRequest(ex.Message);
-            }
+          
         }
     }
 }
