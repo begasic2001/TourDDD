@@ -27,8 +27,14 @@ namespace Tour.Api.Controllers
             try
             {
                 //_logger.LogInfo("Get All Tour !!!!!!!");
-                var a = await _tourService.GetAll();
-
+                //var a = await _tourService.GetAll();
+                var a = _tourService.GetAllJoin(new string[] { "City","Sight","Transport" }).Select(t => new
+                {
+                    name = t.Name,
+                    CityName = t.City.CityName,
+                    SightName = t.Sight.SightName,
+                    TransportName = t.Transport.TransportName
+                });
                 return Ok(a);
             }
             catch (Exception ex)

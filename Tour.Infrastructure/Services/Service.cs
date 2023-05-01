@@ -55,22 +55,14 @@ namespace Tour.Infrastructure.Services
             return _mapper.Map<TDto>(entity);
         }
 
-        public async Task<TDto> GetFirstAsync(Expression<Func<TDto, bool>> expression)
-        {
-            var predicate = _mapper.Map<Expression<Func<TEntity, bool>>>(expression);
-            var entity = await _repository.GetFirstAsync(predicate);
-            return _mapper.Map<TDto>(entity);
-        }
+
 
         public IEnumerable<TEntity> GetMultiJoin(Expression<Func<TEntity, bool>> expression, string[] includes = null)
         {
             return _repository.GetMultiJoin(expression, includes);
         }
 
-        public IEnumerable<TEntity> GetMultiPagingJoin(Expression<Func<TEntity, bool>> filter, out int total, int index = 0, int size = 50, string[] includes = null)
-        {
-            return _repository.GetMultiPagingJoin(filter, out total, index, size, includes);
-        }
+      
 
         public async Task UpdateAsync(string id, TDto entityTDto)
         {
