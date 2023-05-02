@@ -126,5 +126,19 @@ namespace Tour.Api.Controllers
             }
 
         }
+
+        [HttpGet("Search")]
+        public IActionResult GettAllProducts(string? search, double? from, double? to, string? sortBy, int page = 1)
+        {
+            try
+            {
+                var result = _tourService.Search(search, from, to, sortBy, page);
+                return Ok(result);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

@@ -14,12 +14,13 @@ using System.Text.Unicode;
 using System.Threading.Tasks;
 using System.Web;
 using Tour.Api.Models;
-using Tour.Api.Models.Logout;
 using Tour.Application.Dto.User;
 using Tour.Application.Interfaces;
 using Tour.Domain.Entities;
 using Tour.Infrastructure.Data;
-
+using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
+using Tour.Api.Models.Logout;
 namespace Tour.Api.Controllers
 {
     [Route("api/[controller]")]
@@ -34,7 +35,6 @@ namespace Tour.Api.Controllers
             _userService = userService;
             _context = context;
         }
-
         [HttpGet("GetAllUser")]
         public async Task<IActionResult> GetAllUser()
         {
@@ -140,7 +140,7 @@ namespace Tour.Api.Controllers
                 t.Wait();
 
                 
-                var result = JsonConvert.DeserializeObject(t.Result,typeof(AuthToken));
+                var result = JsonConvert.DeserializeObject(t.Result,typeof(Tour.Api.Models.Logout.AuthToken));
                 return Ok(result);
                 
             }

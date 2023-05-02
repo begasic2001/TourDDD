@@ -4,10 +4,7 @@ namespace Tour.Application.Interfaces
 {
     public interface ITourService : IService<Tours, TourDto>
     {
-        //Task<IEnumerable<object>> GetJoin();
-        //Task<Tours> GetJoinById(string id);
-        //Task AddAsyncJoin(TourDto tour);
-        //Task UpdateAsyncJoin(string id, TourDto tour);
+        SearchVM Search(string? search, double? from, double? to, string? sortBy, int page = 1);
 
     }
 }
