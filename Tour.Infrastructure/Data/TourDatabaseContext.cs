@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Reflection.Metadata;
 using Tour.Domain.Entities;
 
 namespace Tour.Infrastructure.Data
@@ -24,6 +25,8 @@ namespace Tour.Infrastructure.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<CartOrder>()
+                .ToTable(tb => tb.HasTrigger("trg_TOTAL_CART_TRIGGER"));
             modelBuilder.Entity<CartOrder>()
                 .HasKey(c => new { c.UsersId, c.TourId });
 

@@ -14,7 +14,7 @@ using Tour.Infrastructure.Data;
 
 namespace Tour.Api.Controllers
 {
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "User")]
+    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "User")]
     [Route("api/[controller]")]
     [ApiController]
     public class CartController : ControllerBase
@@ -35,37 +35,42 @@ namespace Tour.Api.Controllers
                 var jsonToken = handler.ReadToken(token);
                 var tokenS = jsonToken as JwtSecurityToken;
                 var UsersId = tokenS.Claims.First(claim => claim.Type == "nameid").Value;
-                Console.WriteLine("TourId:::::"+model.TourId);
-                //var hasCart = context.CartOrders.SingleOrDefault(c => c.UsersId == UsersId && c.TourId == model.TourId);
-                //if (hasCart == null)
-                //{
-                //    var resultTour = context.Tour.FirstOrDefault(t => t.Id == model.TourId);
-                //    Console.WriteLine("Price::::" + resultTour.Price);
-                //    var cart = new CartOrder()
-                //    {
-                //        UsersId = UsersId,
-                //        TourId = model.TourId,
-                //        Amount = 1,
-                //        SingleProduct = resultTour.Price,
-                //    };
-                //    await context.CartOrders.AddAsync(cart);
-                //}
-                //else
-                //{
-                //    hasCart.Amount++;
-                //}
+                // find the item has in cart 
+                var hasCart = context.CartOrders.SingleOrDefault(c => c.UsersId == UsersId && c.TourId == model.TourId);
+                
+                if (hasCart == null)
+                {
+                    var resultTour = context.Tour.FirstOrDefault(t => t.Id == model.TourId);
+                    Console.WriteLine("Price::::" + resultTour.Price);
+                    var cart = new CartOrder()
+                    {
+                        UsersId = UsersId,
+                        TourId = model.TourId,
+                        Amount = 1,
+                        SingleProduct = resultTour!.Price,
+                    };
+                    await context.CartOrders.AddAsync(cart);
+                   
+                }
+                else
+                {
+                    hasCart.Amount++;
+                
+                    
 
-                //context.SaveChanges();
-                //return Ok(hasCart);
+                }
+
+                await context.SaveChangesAsync();
+                return Ok(hasCart);
                 // or call store procedure
-                string StoredProc = $"exec sp_AddToCart @CUS ='{UsersId}', @ITEM ='{model.TourId}', @Amount ='1'";
-                await context.CartOrders.FromSqlRaw(StoredProc).ToListAsync();
-                return StatusCode(StatusCodes.Status200OK,
-                       new
-                       {
-                           Status = "Success",
-                           Message = $"Add  for {UsersId} succesffully"
-                       });
+                //string StoredProc = $"exec sp_AddToCart @CUS ='{UsersId}', @ITEM ='{model.TourId}', @Amount ='1'";
+                //await context.CartOrders.FromSqlRaw(StoredProc).ToListAsync();
+                //return StatusCode(StatusCodes.Status200OK,
+                //       new
+                //       {
+                //           Status = "Success",
+                //           Message = $"Add  for {UsersId} succesffully"
+                //       });
                 //var result = await context.CartOrders.Ad
             }
             catch (Exception ex)
@@ -88,9 +93,20 @@ namespace Tour.Api.Controllers
                 var jsonToken = handler.ReadToken(token);
                 var tokenS = jsonToken as JwtSecurityToken;
                 var UsersId = tokenS.Claims.First(claim => claim.Type == "nameid").Value;
-                
-                 
-                var result = await context.CartOrders.FromSqlRaw($"exec sp_getCart @CUS = '{UsersId}' ").ToListAsync();    
+
+
+                //var result = await context.CartOrders.FromSqlRaw($"exec sp_getCart @CUS = '{UsersId}' ").ToListAsync();    
+                //return Ok(result);
+                var result = context.CartOrders.Include(c => c.Tour).Select(c => new
+                {
+                    UserId = c.UsersId,
+                    TourId = c.TourId,
+                    Name = c.Tour.Name,
+                    Amount = c.Amount,
+                    SingleProduct = c.SingleProduct,
+                    Price = c.Tour.Price,
+                    Total = (double)c.Amount * c.Tour.Price
+                }).ToList();
                 return Ok(result);
             }
             catch (Exception ex)
